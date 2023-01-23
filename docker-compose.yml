@@ -1,0 +1,42 @@
+version: '3'
+services:
+  php:
+    build: ./docker/php
+    container_name: phpyii
+    volumes:
+      - ./src:/var/www/app
+    #  - ./docker/php/config/php.ini:/usr/local/etc/php/php.ini
+      - ./docker/php/php-fpm.conf:/usr/local/etc/php-fpm.conf
+      - ./docker/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
+    links:
+      - postgres
+    depends_on:
+      - postgres
+
+  nginx:
+    container_name: nginxyii
+    image: nginx:1.23.3
+    volumes:
+      - ./docker/nginx/config/:/etc/nginx/conf.d/
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./src:/var/www/app
+    ports:
+      - 80:80
+      - 443:443
+    links:
+      - php
+    depends_on:
+      - php
+
+  postgres:
+    image: postgres:15.1
+    container_name: postgresyii
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: test
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"      
