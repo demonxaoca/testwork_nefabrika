@@ -32,11 +32,12 @@ class m230123_120809_rooms_tbl extends Migration
             'id' => Schema::TYPE_PK,
             'room_id' => Schema::TYPE_INTEGER, 
             'tariff_id' => Schema::TYPE_INTEGER, 
-            'date_from' => Schema::TYPE_DATE,
-            'date_to' => Schema::TYPE_DATE,
+            'date' => Schema::TYPE_DATE,
             'guest_count' => Schema::TYPE_INTEGER,
             'value' => Schema::TYPE_INTEGER,
         ]);
+
+        $this->createIndex('rooms_prices_idx', 'rooms_prices', ['room_id','date','guest_count']);
     }
 
     /**

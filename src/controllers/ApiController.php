@@ -46,7 +46,7 @@ select h.name as hotel_name, h.address, tmp.price_one, tmp.price_common, t.name 
 	where 
 		room_id in (select distinct room_id from rooms_avl ra where :date_from >= date_from  and :date_to <= date_to and count > 0) 	
 		and
-		date_from between :date_from and :date_to
+		"date" between :date_from and :date_to
 		and guest_count = :guest_count
 ) tmp 
 join rooms r on r.id = tmp.room_id

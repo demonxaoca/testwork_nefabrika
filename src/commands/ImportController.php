@@ -128,63 +128,17 @@ class ImportController extends Controller
                                             $bulk[] = [
                                                 'room_id' => $rModel->id,
                                                 'tariff_id' => $tariffsMap[$rateTariffId],
-                                                'date_from' => $priceDate,
+                                                'date' => $priceDate,
                                                 'guest_count' => $rateGuestCount,
                                                 'value' => $priceValue,
                                             ];
                                             if (count($bulk) >= 50) {
-                                                \Yii::$app->db->createCommand()->batchInsert('rooms_prices', ['room_id', 'tariff_id', 'date_from','guest_count', 'value'], $bulk)->execute();
+                                                \Yii::$app->db->createCommand()->batchInsert('rooms_prices', ['room_id', 'tariff_id', 'date','guest_count', 'value'], $bulk)->execute();
                                                 $bulk = [];
                                             }
-                                            // $priceDate = $price->attributes->getNamedItem('date')->value;
-                                            // $priceValue = (float) $price->nodeValue;
-                                            // $pModel = new RoomPrice([
-                                            //     'room_id' => $rModel->id,
-                                            //     'tariff_id' => $tariffsMap[$rateTariffId],
-                                            //     'date_from' => $priceDate,
-                                            //     'guest_count' => $rateGuestCount,
-                                            //     'value' => $priceValue,
-                                            // ]);
-                                            // $pModel->save();
-                                            // unset($pModel);
-                                            // $priceDate = new \DateTimeImmutable($priceDate);
-                                            // if (!$prevDate) {
-                                            //     $prevDate = $priceDate;
-                                            // }
-                                            // if (!$startDate) {
-                                            //     $startDate = $priceDate;
-                                            // }
-                                            // if (!$prevPrice) {
-                                            //     $prevPrice = $priceValue;
-                                            // }
-                                            // if ($priceDate->diff($prevDate)->d <= 1 && $prevPrice === $priceValue) {
-                                            //     $prevDate = $priceDate;
-                                            //     continue;
-                                            // }
-                                            // $pModel = new RoomPrice([
-                                            //     'room_id' => $rModel->id,
-                                            //     'tariff_id' => $tariffsMap[$rateTariffId],
-                                            //     'date_from' => $startDate->format('Y-m-d'),
-                                            //     'date_to' => $prevDate->format('Y-m-d'),
-                                            //     'guest_count' => $rateGuestCount,
-                                            //     'value' => $priceValue,
-                                            // ]);
-                                            // $pModel->save();
-                                            // $startDate = $priceDate;
-                                            // $prevDate = $priceDate;
-                                            // $prevPrice = $priceValue;
                                         }
                                     }
-                                    \Yii::$app->db->createCommand()->batchInsert('rooms_prices', ['room_id', 'tariff_id', 'date_from','guest_count', 'value'], $bulk)->execute();
-                                    // $pModel = new RoomPrice([
-                                    //     'room_id' => $rModel->id,
-                                    //     'tariff_id' => $tariffsMap[$rateTariffId],
-                                    //     'date_from' => $startDate->format('Y-m-d'),
-                                    //     'date_to' => $priceDate->format('Y-m-d'),
-                                    //     'guest_count' => $rateGuestCount,
-                                    //     'value' => $priceValue,
-                                    // ]);
-                                    // $pModel->save();
+                                    \Yii::$app->db->createCommand()->batchInsert('rooms_prices', ['room_id', 'tariff_id', 'date','guest_count', 'value'], $bulk)->execute();
                                 }
                             }
                         }
