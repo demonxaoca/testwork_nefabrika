@@ -32,7 +32,14 @@ class ApiController extends Controller
         $start = microtime(true) * 1000;
         $params = \Yii::$app->request->get();
         $sql = <<<SQL
-select h.name as hotel_name, h.address, tmp.price_one, tmp.price_common, t.name room_name, r.name from (
+select 
+    h.name as hotel_name, 
+    h.address as hotel_address, 
+    tmp.price_one as price, 
+    tmp.price_common as total_pice, 
+    t.name tariff_name, 
+    r.name room_name
+from (
 	select 
 		distinct on (r.hotel_id) hotel_id, 
 		first_value(room_id) over (partition by hotel_id, room_id order by value) room_id,
